@@ -111,7 +111,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 @st.experimental_memo
 def temp():
-    df = pd.read_excel(uploaded_f, engine='openpyxl')
+    df = pd.read_excel(uploaded_f)
     return df
 
 
