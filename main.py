@@ -39,7 +39,7 @@ def download_ppt():
 
 # Call the function in your Streamlit app
 
-@st.experimental_memo
+
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     modify = st.checkbox("Add filters")
 
