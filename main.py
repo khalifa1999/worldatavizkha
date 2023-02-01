@@ -38,7 +38,6 @@ def download_ppt():
 
 
 # Call the function in your Streamlit app
-download_ppt()
 
 
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -114,14 +113,14 @@ def temp():
     df = pd.read_excel(uploaded_f)
     return df
 
-
+@st.experimental_memo
 def unemployment(data):
     fig = px.scatter(data, x='gdp_perc_education', y='kids_perc_dropout', size='unemployement', color='country')
     st.plotly_chart(fig)
     st.write("The previous scatter plot represents the relationship between country, percentage of GDP dedicated to education, number of children out of school, and unemployment rate. The X-axis represents the HDI, the Y-axis represents the percentage of GDP dedicated to education, and the Z-axis represents the number of children out of school. Each point on the scatter plot represents a country, with its position in the 3D space indicating its HDI, percentage of GDP dedicated to education, and number of children out of school. The color of each point represents the country."\
             "This visualization provides a useful overview of the interplay between these three factors and how they vary between countries. It allows us to see which countries have higher HDI, higher investment in education, and lower numbers of children out of school, and how these factors may be related to each other.")
 
-
+@st.experimental_memo
 def plot_category_evolution(data):
     fig = px.scatter_3d(data, x=data["HDI_XXI"], y=data["gdp_perc_health"], z=data['infant_mortality'],
                         color='country')
@@ -129,7 +128,7 @@ def plot_category_evolution(data):
     st.write("A 3D scatter plot showing the relationship between HDI (Human Development Index), percentage of GDP dedicated to health, and infant mortality, where each point represents a country. The x-axis represents HDI, the y-axis represents the percentage of GDP dedicated to health, and the z-axis represents infant mortality. ")
 
 
-
+@st.experimental_memo
 def plot_HDI_women_rep(data):
     fig = px.scatter(data, x=data['parliament_gender_equity'], y=data['HDI_XXI'], trendline='ols')
     st.plotly_chart(fig)
