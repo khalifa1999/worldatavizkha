@@ -12,34 +12,36 @@ st.set_page_config(page_title="World data Viz KHALIFA & YERO NIAMADIO",
                    page_icon=None, layout="centered", initial_sidebar_state="auto"
                    )
 
-st.title("World data Viz KHALIFA & YERO NIAMADIO")
-st.subheader("Welcome !!")
+logo = "files/WGS-summit-logo.png"
+st.sidebar.image(logo, width=200)
 
-uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
+log = "files/WGS-summit-logo-transparency.png"
+st.image(log, width=500)
+
+st.title("World data Viz KHALIFA & YERO NIAMADIO")
+st.subheader("Please when sorting note that the plot change is only affected its own arguments !!")
+
+uploaded_f = "files/datavizII.xlsx"
+
 
 # Download the 2 others static presentations
 def download_ppt():
     # Specify the file path of the PowerPoint file
-    file_path = "path/to/presentation.pptx"
+    file_path = ""
 
     # Add a download button and link it to the file path
-    st.markdown("""
+    st.sidebar.markdown("""
     <a href="{}" download="presentation.pptx">
-        <button style="background-color:#0077C9;color:white;padding:10px;">Download PowerPoint Presentation</button>
+        <button style="background-color:#0077C9;color:white;padding:10px;">Download 1st static dashboard</button>
     </a>
     """.format(file_path), unsafe_allow_html=True)
+
 
 # Call the function in your Streamlit app
 download_ppt()
 
+
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Adds a UI on top of a dataframe to let viewers filter columns
-    Args:
-        df (pd.DataFrame): Original dataframe
-    Returns:
-        pd.DataFrame: Filtered dataframe
-    """
     modify = st.checkbox("Add filters")
 
     if not modify:
@@ -113,15 +115,30 @@ def temp():
     return df
 
 
+def unemployment(data):
+    fig = px.scatter(data, x='gdp_perc_education', y='kids_perc_dropout', size='unemployement', color='country')
+    st.plotly_chart(fig)
+    st.write("The previous scatter plot represents the relationship between country, percentage of GDP dedicated to education, number of children out of school, and unemployment rate. The X-axis represents the HDI, the Y-axis represents the percentage of GDP dedicated to education, and the Z-axis represents the number of children out of school. Each point on the scatter plot represents a country, with its position in the 3D space indicating its HDI, percentage of GDP dedicated to education, and number of children out of school. The color of each point represents the country."\
+            "This visualization provides a useful overview of the interplay between these three factors and how they vary between countries. It allows us to see which countries have higher HDI, higher investment in education, and lower numbers of children out of school, and how these factors may be related to each other.")
+
+
 def plot_category_evolution(data):
     fig = px.scatter_3d(data, x=data["HDI_XXI"], y=data["gdp_perc_health"], z=data['infant_mortality'],
-                        color='indicator')
+                        color='country')
     st.plotly_chart(fig)
+    st.write("A 3D scatter plot showing the relationship between HDI (Human Development Index), percentage of GDP dedicated to health, and infant mortality, where each point represents a country. The x-axis represents HDI, the y-axis represents the percentage of GDP dedicated to health, and the z-axis represents infant mortality. ")
+
 
 
 def plot_HDI_women_rep(data):
     fig = px.scatter(data, x=data['parliament_gender_equity'], y=data['HDI_XXI'], trendline='ols')
     st.plotly_chart(fig)
+    st.write(
+        "The bubble chart shows the relationship between the Human Development Index (HDI) and the percentage of women representation in parliament for different countries. The HDI is a composite measure of three dimensions of human development: health, education, and standard of living." \
+        "The size of each bubble represents the value of HDI, with larger bubbles indicating higher HDI values. The x-axis shows the percentage of women representation in parliament and the y-axis shows the HDI values." \
+        "As observed from the chart, there seems to be a positive correlation between HDI and the percentage of women representation in parliament. Countries with higher HDI values generally have a higher percentage of women representation in parliament, indicating that gender equality and human development are closely linked." \
+        "The Ordinary Least Squares (OLS) line is a line of best fit that is used to model the relationship between two variables. In our case, between HDI and women representation, the OLS line represents the relationship between the two variables and how they change together.")
+
 
 
 # Create a line chart
@@ -132,11 +149,12 @@ if uploaded_f is not None:
 
     # Select a category to display
     zila = filter_dataframe(df)
-    st.dataframe(zila)
 
-    inf_mort_perc_gdp = zila[['HDI_XXI', 'gdp_perc_health', 'infant_mortality', 'indicator']]
+    umpt = zila[['gdp_perc_education','country', 'kids_perc_dropout', 'unemployement']]
+    unemployment(umpt)
+
+    inf_mort_perc_gdp = zila[['HDI_XXI', 'gdp_perc_health', 'infant_mortality', 'country']]
     plot_category_evolution(inf_mort_perc_gdp)
 
     equity_hdi = zila[["parliament_gender_equity", "HDI_XXI"]]
-    st.dataframe(equity_hdi)
     plot_HDI_women_rep(equity_hdi)
