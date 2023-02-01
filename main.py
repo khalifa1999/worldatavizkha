@@ -19,7 +19,7 @@ log = "files/WGS-summit-logo-transparency.png"
 st.image(log, width=500)
 
 st.title("World data Viz KHALIFA & YERO NIAMADIO")
-st.subheader("Please when sorting note that the plot change is only affected its own arguments !!")
+st.subheader("Feel free to manipulate the interactives dashboards by pressing on Add Filter button and changing variables !!")
 
 uploaded_f = "files/datavizII.xlsx"
 
