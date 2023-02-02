@@ -117,8 +117,8 @@ def temp():
 def unemployment(data):
     fig = px.scatter(data, x='gdp_perc_education', y='kids_perc_dropout', size='unemployement', color='country')
     st.plotly_chart(fig)
-    st.write("The previous scatter plot represents the relationship between country, percentage of GDP dedicated to education, number of children out of school, and unemployment rate. The X-axis represents the HDI, the Y-axis represents the percentage of GDP dedicated to education, and the Z-axis represents the number of children out of school. Each point on the scatter plot represents a country, with its position in the 3D space indicating its HDI, percentage of GDP dedicated to education, and number of children out of school. The color of each point represents the country."\
-            "This visualization provides a useful overview of the interplay between these three factors and how they vary between countries. It allows us to see which countries have higher HDI, higher investment in education, and lower numbers of children out of school, and how these factors may be related to each other.")
+    st.write("The previous scatter plot represents the relationship between country, percentage of GDP dedicated to education, number of children out of school, and unemployment rate. The X-axis represents the gdp percentage for education, the Y-axis represents the percentage percentage of kids out of school, and the size of the dot represents unemployment rate. Each point on the scatter plot represents a country, with its position in the 3D space indicating its unemployment rate, percentage of GDP dedicated to education, and number of children out of school. The color of each point represents the country."\
+            "This visualization provides a useful overview of the interplay between these three factors and how they vary between countries. It allows us to see which countries have higher HDI, higher investment in education, and lower numbers of children out of school, and how these factors may be related to each other. Using the filter HDI on it can help us see the trends between develped and developing countries.")
 
 @st.experimental_memo
 def plot_category_evolution(data):
@@ -133,8 +133,7 @@ def plot_HDI_women_rep(data):
     fig = px.scatter(data, x=data['parliament_gender_equity'], y=data['HDI_XXI'], trendline='ols')
     st.plotly_chart(fig)
     st.write(
-        "The bubble chart shows the relationship between the Human Development Index (HDI) and the percentage of women representation in parliament for different countries. The HDI is a composite measure of three dimensions of human development: health, education, and standard of living." \
-        "The size of each bubble represents the value of HDI, with larger bubbles indicating higher HDI values. The x-axis shows the percentage of women representation in parliament and the y-axis shows the HDI values." \
+        "The scatter plot chart shows the relationship between the Human Development Index (HDI) and the percentage of women representation in parliament for different countries. The HDI is a composite measure of three dimensions of human development: health, education, and standard of living." \
         "As observed from the chart, there seems to be a positive correlation between HDI and the percentage of women representation in parliament. Countries with higher HDI values generally have a higher percentage of women representation in parliament, indicating that gender equality and human development are closely linked." \
         "The Ordinary Least Squares (OLS) line is a line of best fit that is used to model the relationship between two variables. In our case, between HDI and women representation, the OLS line represents the relationship between the two variables and how they change together.")
 
